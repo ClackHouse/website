@@ -4,7 +4,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     background: var(--theme-void-950);
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
   }
 
   body {
