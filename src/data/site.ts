@@ -58,16 +58,19 @@ export const homePage = {
     "Source code makes the trust boundary inspectable.",
   ],
   trustSummary: "Privacy by architecture, not by promise.",
-  architectureFlow: ["clackhouse CLI", "agent", "VictoriaMetrics", "Grafana"],
-  architecturePoints: [
-    "Install locally via CLI.",
-    "Agent runs on-device, produces aggregate metrics.",
-    "VictoriaMetrics stores, Grafana visualizes.",
-  ],
-  openCoreTitle: "Open core.",
-  openCoreParagraphs: [
-    "The engine driving ClackHouse—the local agent, the metrics pipeline, the visualization stack—is built entirely on open source. We believe that tools with access to your keystrokes must be structurally incapable of betraying your trust. You own the data, the code is public, and the boundaries are verifiable on your own machine.",
-    "While the core product is the local workflow you can run today for free, our open-core model ensures that any future managed or cloud-based features will be built rigidly on top of these inspectable foundations.",
+  openCorePoints: [
+    {
+      title: "Fully open source",
+      copy: "Agent, metrics pipeline, visualization stack. Every line is public and auditable.",
+    },
+    {
+      title: "Free to run locally",
+      copy: "The full local workflow runs on your machine, forever, at no cost.",
+    },
+    {
+      title: "Open core model",
+      copy: "Future managed features build on these inspectable foundations. Never a black box.",
+    },
   ],
   finalCtaTitle: "Start measuring today.",
   finalCtaCopy: "Fully open source. Set it up on your machine in minutes.",
@@ -82,6 +85,7 @@ export const privacyPage = {
   sections: [
     {
       title: "Never captured",
+      description: "Signals that never leave your device.",
       points: [
         "Raw keystrokes",
         "Typed words or phrases",
@@ -90,6 +94,7 @@ export const privacyPage = {
     },
     {
       title: "How",
+      description: "Architecture that enforces the boundary.",
       points: [
         "Agent runs locally",
         "Signals reduced to lossy metrics on-device",
@@ -98,6 +103,7 @@ export const privacyPage = {
     },
     {
       title: "Why open source",
+      description: "Trust from visibility, not branding.",
       points: [
         "Boundary is inspectable",
         "Claims are challengeable",
@@ -124,25 +130,30 @@ export const homeMachineMarkdown = [
   `## ${homePage.title}`,
   homePage.description,
   "",
-  "## Platform status",
-  ...homePage.platformStatus.map((p) => `- **${p.platform}**: ${p.status}`),
-  "",
-  "## What ClackHouse is",
-  ...homePage.truths.map((truth) => `- **${truth.title}**: ${truth.copy}`),
-  "",
   "## Privacy / Trust",
+  "### Strong boundaries, stated plainly.",
   homePage.trustSummary,
   ...homePage.trustClaims.map((claim) => `- ${claim}`),
   "",
-  "## Local-first architecture",
-  `Flow: ${homePage.architectureFlow.join(" -> ")}`,
-  ...homePage.architecturePoints.map((point) => `- ${point}`),
+  "## What ClackHouse is",
+  "### Visibility without capture.",
+  "Built for people who want to understand their typing patterns without turning their machine into a black box.",
+  ...homePage.truths.map((truth) => `- **${truth.title}**: ${truth.copy}`),
   "",
-  "## Open core",
-  ...homePage.openCoreParagraphs.map((paragraph) => `${paragraph}\n`),
+  "## Open core · Open source",
+  "### Built like infrastructure, not a black box.",
+  "The engine is open source. The model is open core.",
+  ...homePage.openCorePoints.map(
+    (point) => `- **${point.title}**: ${point.copy}`,
+  ),
+  "",
   "## Explore",
+  `### ${homePage.finalCtaTitle}`,
   homePage.finalCtaCopy,
   `- [${homePage.finalCta.label}](${homePage.finalCta.href})`,
+  "",
+  "### Platform status",
+  ...homePage.platformStatus.map((p) => `- **${p.platform}**: ${p.status}`),
   "",
   "## Footer",
   footerMarkdown,
@@ -151,10 +162,16 @@ export const homeMachineMarkdown = [
 export const privacyMachineMarkdown = [
   "# [ClackHouse](/) — Privacy model",
   "",
+  "## Navigation",
+  navMarkdown,
+  "",
+  privacyPage.description,
+  "",
   privacyPage.intro,
   "",
   ...privacyPage.sections.flatMap((section) => [
     `## ${section.title}`,
+    section.description,
     ...section.points.map((point) => `- ${point}`),
     "",
   ]),
