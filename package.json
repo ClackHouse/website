@@ -1,0 +1,33 @@
+{
+  "name": "clackhouse-website",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.32.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.38.1",
+    "@astrojs/starlight-tailwind": "^5.0.0",
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/plus-jakarta-sans": "^5.2.8",
+    "@fontsource/ibm-plex-mono": "^5.2.7",
+    "@fontsource/space-mono": "^5.2.9",
+    "@iconify-json/simple-icons": "^1.2.74",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^6.0.1",
+    "astro-icon": "^1.1.5",
+    "sharp": "^0.34.2",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.7",
+    "typescript": "^5.9.3"
+  }
+}

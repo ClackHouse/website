@@ -1,0 +1,103 @@
+@import '@fontsource-variable/plus-jakarta-sans';
+@import '@fontsource/space-mono/400.css';
+@import '@fontsource/space-mono/700.css';
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --theme-void-950: #000000;
+  --theme-void-900: #090b0e;
+  --theme-panel-900: #0e1116;
+  --theme-panel-850: #13171d;
+  --theme-panel-800: #1a1e26;
+  
+  --theme-fog-50: #ffffff;
+  --theme-fog-100: #f1f5f9;
+  --theme-fog-200: #e2e8f0;
+  --theme-fog-300: #94a3b8;
+  
+  --theme-signal-300: #a7f3d0;
+  --theme-signal-400: #34d399;
+  --theme-signal-500: #10b981;
+  --theme-amber-300: #fef08a;
+  --theme-amber-400: #fde047;
+  --theme-line-soft: rgba(255, 255, 255, 0.06);
+  --theme-line: rgba(255, 255, 255, 0.08);
+  --theme-line-strong: rgba(255, 255, 255, 0.14);
+  --theme-wash: rgba(255, 255, 255, 0.02);
+  --theme-wash-strong: rgba(255, 255, 255, 0.04);
+  --theme-grid: rgba(255, 255, 255, 0.035);
+  --theme-nav-backdrop: rgba(11, 13, 16, 0.82);
+  --theme-signal-glow: rgba(16, 185, 129, 0.15);
+  --theme-amber-glow: rgba(250, 204, 21, 0.1);
+  --theme-panel-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
+  --theme-signal-shadow: 0 0 0 1px rgba(16, 185, 129, 0.2), 0 16px 40px rgba(16, 185, 129, 0.15);
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  /* Clean white backgrounds */
+  --theme-void-950: #ffffff;
+  --theme-void-900: #f8fafc;
+  --theme-panel-900: #ffffff;
+  --theme-panel-850: #f1f5f9;
+  --theme-panel-800: #e2e8f0;
+  
+  /* Extreme dark text for max contrast */
+  --theme-fog-50: #000000;
+  --theme-fog-100: #0f172a;
+  --theme-fog-200: #1e293b;
+  --theme-fog-300: #475569;
+  
+  /* Deeper variant for signal/amber in light mode to maintain contrast */
+  --theme-signal-300: #059669;
+  --theme-signal-400: #047857;
+  --theme-signal-500: #064e3b;
+  --theme-amber-300: #eab308;
+  --theme-amber-400: #ca8a04;
+  
+  --theme-line-soft: rgba(17, 22, 26, 0.12);
+  --theme-line: rgba(17, 22, 26, 0.18);
+  --theme-line-strong: rgba(17, 22, 26, 0.25);
+  --theme-wash: rgba(17, 22, 26, 0.04);
+  --theme-wash-strong: rgba(17, 22, 26, 0.07);
+  --theme-grid: rgba(17, 22, 26, 0.09);
+  
+  --theme-nav-backdrop: rgba(255, 255, 255, 0.9);
+  --theme-signal-glow: rgba(5, 150, 105, 0.2);
+  --theme-amber-glow: rgba(202, 138, 4, 0.15);
+  --theme-panel-shadow: 0 24px 56px rgba(15, 23, 42, 0.12);
+  --theme-signal-shadow: 0 0 0 1px rgba(5, 150, 105, 0.2), 0 14px 34px rgba(5, 150, 105, 0.15);
+}
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  --color-void-950: var(--theme-void-950);
+  --color-void-900: var(--theme-void-900);
+  --color-panel-900: var(--theme-panel-900);
+  --color-panel-850: var(--theme-panel-850);
+  --color-panel-800: var(--theme-panel-800);
+  --color-fog-50: var(--theme-fog-50);
+  --color-fog-100: var(--theme-fog-100);
+  --color-fog-200: var(--theme-fog-200);
+  --color-fog-300: var(--theme-fog-300);
+  --color-signal-300: var(--theme-signal-300);
+  --color-signal-400: var(--theme-signal-400);
+  --color-signal-500: var(--theme-signal-500);
+  --color-amber-300: var(--theme-amber-300);
+  --color-amber-400: var(--theme-amber-400);
+  --color-line-soft: var(--theme-line-soft);
+  --color-line: var(--theme-line);
+  --color-line-strong: var(--theme-line-strong);
+  --color-wash: var(--theme-wash);
+  --color-wash-strong: var(--theme-wash-strong);
+}
+
+::selection {
+  background: rgba(31, 224, 142, 0.24);
+  color: var(--theme-fog-50);
+}
