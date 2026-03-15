@@ -160,7 +160,7 @@ export const homeMachineMarkdown = [
 ].join("\n");
 
 export const privacyMachineMarkdown = [
-  "# [ClackHouse](/) — Privacy model",
+  "# [ClackHouse](/) - Privacy model",
   "",
   "## Navigation",
   navMarkdown,
