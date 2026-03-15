@@ -35,11 +35,9 @@ import { privacyMachineMarkdown, privacyPage } from "../data/site";
         `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="6" y="8" width="16" height="12" rx="2" stroke="var(--theme-signal-400)" stroke-width="1.5" fill="var(--theme-signal-400)" fill-opacity="0.06"/><path d="M10 14h8M10 17h5" stroke="var(--theme-signal-400)" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/><circle cx="14" cy="5" r="2" stroke="var(--theme-signal-400)" stroke-width="1.2" opacity="0.6"/><path d="M14 7v1" stroke="var(--theme-signal-400)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/></svg>`,
         `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="var(--theme-signal-400)" stroke-width="1.5" fill="var(--theme-signal-400)" fill-opacity="0.06"/><path d="M10 14l3 3 5-6" stroke="var(--theme-signal-400)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
       ];
-      const sectionDescriptions = [
-        "Signals that never leave your device.",
-        "Architecture that enforces the boundary.",
-        "Trust from visibility, not branding.",
-      ];
+      const sectionDescriptions = privacyPage.sections.map(
+        (s) => s.description,
+      );
       const isAlt = (i: number) => i % 2 === 0;
       return privacyPage.sections.map((section, i) => (
         <section
