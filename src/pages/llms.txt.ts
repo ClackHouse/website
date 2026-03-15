@@ -1,31 +1,31 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute } from "astro";
 
-import { githubOrgUrl, homePage, privacyPage } from '../data/site';
+import { githubOrgUrl, homePage, privacyPage } from "../data/site";
 
 export const GET: APIRoute = () => {
   const body = [
-    '# ClackHouse',
-    'Site: https://clack.house',
+    "# ClackHouse",
+    "Site: https://clack.house",
     `Summary: ${homePage.description}`,
-    '',
-    'Public pages:',
-    '- /',
-    '- /privacy/',
-    '',
-    'Markdown mirrors:',
-    '- /index.md',
-    '- /privacy.md',
-    '',
-    'Notes:',
+    "",
+    "Public pages:",
+    "- /",
+    "- /privacy/",
+    "",
+    "Markdown mirrors:",
+    "- /index.md",
+    "- /privacy.md",
+    "",
+    "Notes:",
     `- ${privacyPage.description}`,
-    '',
-    'GitHub:',
-    `- ${githubOrgUrl}`
-  ].join('\n');
+    "",
+    "GitHub:",
+    `- ${githubOrgUrl}`,
+  ].join("\n");
 
   return new Response(body, {
     headers: {
-      'Content-Type': 'text/plain; charset=utf-8'
-    }
+      "Content-Type": "text/plain; charset=utf-8",
+    },
   });
 };

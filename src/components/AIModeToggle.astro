@@ -2,7 +2,12 @@
   class="ai-toggle inline-flex items-center rounded-full border border-line bg-panel-900/80 p-1"
   aria-label="Select reading mode"
 >
-  <button type="button" data-ai-option="human" aria-label="Use the regular site mode" title="Human mode">
+  <button
+    type="button"
+    data-ai-option="human"
+    aria-label="Use the regular site mode"
+    title="Human mode"
+  >
     Human
   </button>
   <button
@@ -16,27 +21,34 @@
 </clackhouse-ai-toggle>
 
 <script>
-  type AIMode = 'human' | 'machine';
+  type AIMode = "human" | "machine";
 
-  const storageKey = 'clackhouse-ai-mode';
+  const storageKey = "clackhouse-ai-mode";
 
   const parseMode = (mode: unknown): AIMode =>
-    mode === 'machine' || mode === 'ai' ? 'machine' : 'human';
+    mode === "machine" || mode === "ai" ? "machine" : "human";
 
   const getStoredMode = (): AIMode =>
-    parseMode(typeof localStorage !== 'undefined' && localStorage.getItem(storageKey));
+    parseMode(
+      typeof localStorage !== "undefined" && localStorage.getItem(storageKey),
+    );
 
   function syncButtons(mode: AIMode) {
-    document.querySelectorAll('clackhouse-ai-toggle').forEach((toggle) => {
-      toggle.querySelectorAll<HTMLButtonElement>('button[data-ai-option]').forEach((button) => {
-        button.setAttribute('aria-pressed', String(button.dataset.aiOption === mode));
-      });
+    document.querySelectorAll("clackhouse-ai-toggle").forEach((toggle) => {
+      toggle
+        .querySelectorAll<HTMLButtonElement>("button[data-ai-option]")
+        .forEach((button) => {
+          button.setAttribute(
+            "aria-pressed",
+            String(button.dataset.aiOption === mode),
+          );
+        });
     });
   }
 
   function applyMode(mode: AIMode) {
     document.documentElement.dataset.aiMode = mode;
-    if (typeof localStorage !== 'undefined') {
+    if (typeof localStorage !== "undefined") {
       localStorage.setItem(storageKey, mode);
     }
     syncButtons(mode);
@@ -45,17 +57,19 @@
   class ClackHouseAIToggle extends HTMLElement {
     connectedCallback() {
       syncButtons(getStoredMode());
-      this.addEventListener('click', (event) => {
+      this.addEventListener("click", (event) => {
         const target = event.target;
         if (!(target instanceof HTMLElement)) return;
-        const button = target.closest<HTMLButtonElement>('button[data-ai-option]');
+        const button = target.closest<HTMLButtonElement>(
+          "button[data-ai-option]",
+        );
         if (!button) return;
         applyMode(parseMode(button.dataset.aiOption));
       });
     }
   }
 
-  if (!customElements.get('clackhouse-ai-toggle')) {
-    customElements.define('clackhouse-ai-toggle', ClackHouseAIToggle);
+  if (!customElements.get("clackhouse-ai-toggle")) {
+    customElements.define("clackhouse-ai-toggle", ClackHouseAIToggle);
   }
 </script>

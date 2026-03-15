@@ -1,0 +1,7 @@
+.astro
+.claude
+.starlight-bootstrap
+.starlight-tailwind-bootstrap
+dist
+node_modules
+pnpm-lock.yaml

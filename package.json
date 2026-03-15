@@ -4,13 +4,24 @@
   "type": "module",
   "version": "0.0.1",
   "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "check": "astro check",
+    "check:ci": "pnpm format:check && pnpm check && pnpm build",
+    "commitlint": "commitlint",
+    "prepare": "husky",
     "astro": "astro"
+  },
+  "lint-staged": {
+    "*.{astro,css,js,json,md,mjs,ts,yaml,yml}": "prettier --write"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.38.1",
@@ -28,6 +39,12 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.7",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.9.3"
   }
 }
