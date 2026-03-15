@@ -1,0 +1,514 @@
+@import "tailwindcss";
+@import "./theme.css";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background: var(--theme-void-950);
+  }
+
+  body {
+    min-height: 100vh;
+    background: var(--theme-void-950);
+    color: var(--theme-fog-100);
+    font-family: "Plus Jakarta Sans Variable", sans-serif;
+    text-rendering: optimizeLegibility;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  a,
+  button {
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+.announcement-bar {
+  background: color-mix(
+    in srgb,
+    var(--theme-void-950) 90%,
+    var(--theme-signal-500) 10%
+  );
+}
+
+.site-nav {
+  background: var(--theme-nav-backdrop);
+  box-shadow: inset 0 -1px 0 var(--theme-line-soft);
+}
+
+.panel-shadow {
+  box-shadow: var(--theme-panel-shadow);
+}
+
+.theme-toggle,
+.ai-toggle {
+  backdrop-filter: blur(14px);
+  box-shadow: inset 0 0 0 1px var(--theme-line-soft);
+}
+
+.theme-toggle button,
+.ai-toggle button {
+  border-radius: 9999px;
+  color: var(--theme-fog-300);
+  cursor: pointer;
+  font-family: "Plus Jakarta Sans Variable", sans-serif;
+  font-size: 0.73rem;
+  font-weight: 600;
+  height: 2rem;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  min-width: 2rem;
+  padding: 0 0.85rem;
+  white-space: nowrap;
+}
+
+.ai-toggle button {
+  font-size: 0.65rem;
+  height: 1.75rem;
+  letter-spacing: 0.03em;
+  min-width: 0;
+  padding: 0 0.8rem;
+  text-transform: uppercase;
+}
+
+.theme-toggle button:hover,
+.ai-toggle button:hover {
+  color: var(--theme-fog-50);
+}
+
+.theme-toggle button[aria-pressed="true"],
+.ai-toggle button[aria-pressed="true"] {
+  background: var(--theme-panel-800);
+  box-shadow: inset 0 0 0 1px var(--theme-line);
+  color: var(--theme-fog-50);
+}
+
+[data-ai-mode="machine"] .site-grid {
+  opacity: 0;
+}
+
+[data-ai-mode="machine"] .announcement-bar {
+  display: none;
+}
+
+[data-ai-mode="machine"] .glow-panel,
+[data-ai-mode="machine"] .panel-shadow,
+[data-ai-mode="machine"] .ai-flatten {
+  box-shadow: none !important;
+}
+
+[data-ai-mode="machine"] .ai-hide {
+  display: none !important;
+}
+
+[data-ai-mode="machine"] .ai-readable {
+  max-width: 72ch !important;
+}
+
+[data-ai-mode="machine"] .ai-grid-collapse {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+[data-ai-mode="machine"] .ai-surface {
+  background: transparent !important;
+  border-radius: 1rem !important;
+}
+
+[data-ai-mode="machine"] .ai-tight {
+  gap: 1rem !important;
+}
+
+[data-ai-mode="machine"] .machine-human-content {
+  display: none;
+}
+
+[data-ai-mode="machine"] .machine-markdown-view {
+  display: block;
+}
+
+[data-ai-mode="machine"] .site-nav,
+[data-ai-mode="machine"] .announcement-bar {
+  display: none;
+}
+
+[data-ai-mode="machine"] footer {
+  display: none;
+}
+
+.machine-shell {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--theme-panel-900) 86%, transparent) 0%,
+    color-mix(in srgb, var(--theme-void-950) 92%, transparent) 100%
+  );
+}
+
+.machine-pre {
+  overflow-x: auto;
+  tab-size: 2;
+}
+
+@media (max-width: 640px) {
+  .theme-toggle button,
+  .ai-toggle button {
+    font-size: 0.68rem;
+    min-width: 1.85rem;
+    padding: 0 0.75rem;
+  }
+}
+
+/* ──────────────────────────────────────────
+   3. Background Grid Texture
+   ────────────────────────────────────────── */
+
+.site-grid {
+  background:
+    radial-gradient(
+      circle at top left,
+      var(--theme-signal-glow),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 80% 12%,
+      var(--theme-amber-glow),
+      transparent 18%
+    ),
+    radial-gradient(circle, var(--theme-grid) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    24px 24px;
+  background-position:
+    0 0,
+    0 0,
+    0 0;
+}
+
+/* ──────────────────────────────────────────
+   6. Page Load Animations — Staggered Reveal
+   ────────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.fade-up-d1 {
+  animation-delay: 60ms;
+}
+.fade-up-d2 {
+  animation-delay: 130ms;
+}
+.fade-up-d3 {
+  animation-delay: 200ms;
+}
+.fade-up-d4 {
+  animation-delay: 280ms;
+}
+
+/* Scroll-triggered reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ──────────────────────────────────────────
+   7. Nav Scroll State
+   ────────────────────────────────────────── */
+
+.site-nav {
+  transition:
+    background 240ms ease,
+    box-shadow 240ms ease,
+    padding 200ms ease;
+}
+
+.site-nav.scrolled {
+  background: color-mix(in srgb, var(--theme-void-950) 94%, transparent);
+  box-shadow:
+    inset 0 -1px 0 var(--theme-line-strong),
+    0 4px 20px rgba(0, 0, 0, 0.22);
+}
+
+/* ──────────────────────────────────────────
+   9. CTA Buttons — More Presence
+   ────────────────────────────────────────── */
+
+.cta-primary {
+  position: relative;
+  background: rgba(31, 224, 142, 0.14);
+  border: 1px solid rgba(31, 224, 142, 0.28);
+  box-shadow: 0 0 16px rgba(31, 224, 142, 0.08);
+}
+
+.cta-primary:hover {
+  background: rgba(31, 224, 142, 0.22);
+  border-color: rgba(31, 224, 142, 0.5);
+  box-shadow:
+    0 0 28px rgba(31, 224, 142, 0.16),
+    0 4px 14px rgba(31, 224, 142, 0.1);
+}
+
+.cta-secondary {
+  position: relative;
+}
+
+.cta-secondary:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .cta-primary {
+  background: rgba(15, 122, 77, 0.1);
+  border-color: rgba(15, 122, 77, 0.25);
+  box-shadow: 0 0 12px rgba(15, 122, 77, 0.06);
+}
+
+[data-theme="light"] .cta-primary:hover {
+  background: rgba(15, 122, 77, 0.16);
+  border-color: rgba(15, 122, 77, 0.4);
+  box-shadow:
+    0 0 22px rgba(15, 122, 77, 0.12),
+    0 4px 14px rgba(15, 122, 77, 0.08);
+}
+
+/* ──────────────────────────────────────────
+   5. Architecture Pipeline Connectors
+   ────────────────────────────────────────── */
+
+@keyframes flowPulse {
+  0% {
+    left: -6px;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% + 6px);
+    opacity: 0;
+  }
+}
+
+.pipeline-connector {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 2px;
+  min-width: 32px;
+  flex-shrink: 0;
+}
+
+.pipeline-connector::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--theme-signal-400) 0,
+    var(--theme-signal-400) 4px,
+    transparent 4px,
+    transparent 10px
+  );
+  opacity: 0.3;
+  border-radius: 1px;
+}
+
+.pipeline-connector::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--theme-signal-400);
+  box-shadow: 0 0 8px var(--theme-signal-400);
+  animation: flowPulse 2.4s ease-in-out infinite;
+}
+
+.pipeline-connector:nth-child(4)::after {
+  animation-delay: 0.2s;
+}
+.pipeline-connector:nth-child(6)::after {
+  animation-delay: 0.5s;
+}
+
+.pipeline-node {
+  flex: 1;
+  min-width: 0;
+  border-radius: 1.2rem;
+  border: 1px solid var(--theme-line);
+  background: rgba(11, 13, 16, 0.82);
+  padding: 1rem 1.25rem;
+  text-align: center;
+  font-family: "Space Mono", monospace;
+  font-size: 0.875rem;
+  color: var(--theme-fog-100);
+  position: relative;
+}
+
+.pipeline-node::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(31, 224, 142, 0.08),
+    transparent 50%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Mobile: vertical pipeline */
+@media (max-width: 1023px) {
+  .pipeline-connector {
+    width: 2px;
+    height: 28px;
+    min-width: auto;
+    flex-direction: column;
+  }
+
+  .pipeline-connector::before {
+    background: repeating-linear-gradient(
+      180deg,
+      var(--theme-signal-400) 0,
+      var(--theme-signal-400) 4px,
+      transparent 4px,
+      transparent 10px
+    );
+  }
+
+  .pipeline-connector::after {
+    top: auto;
+    left: -2px;
+    animation-name: flowPulseVertical;
+  }
+}
+
+@keyframes flowPulseVertical {
+  0% {
+    top: -6px;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% + 6px);
+    opacity: 0;
+  }
+}
+
+/* ──────────────────────────────────────────
+   10. Hero Gradient Glow
+   ────────────────────────────────────────── */
+
+.hero-glow {
+  background: radial-gradient(
+    ellipse 80% 50% at 50% 100%,
+    rgba(16, 185, 129, 0.28),
+    transparent 70%
+  );
+}
+
+[data-theme="light"] .hero-glow {
+  background: radial-gradient(
+    ellipse 80% 50% at 50% 100%,
+    rgba(5, 150, 105, 0.18),
+    transparent 70%
+  );
+}
+
+/* ──────────────────────────────────────────
+   Light Theme Polish
+   ────────────────────────────────────────── */
+
+[data-theme="light"] .site-grid {
+  background:
+    radial-gradient(
+      circle at top left,
+      var(--theme-signal-glow),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 80% 12%,
+      var(--theme-amber-glow),
+      transparent 18%
+    ),
+    radial-gradient(circle, var(--theme-grid) 0.8px, transparent 0.8px);
+  background-size:
+    auto,
+    auto,
+    24px 24px;
+}
+
+[data-theme="light"] .pipeline-node {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--theme-line-strong);
+}
+
+[data-theme="light"] .pipeline-node::before {
+  background: linear-gradient(135deg, rgba(15, 122, 77, 0.06), transparent 50%);
+}
+
+[data-theme="light"] .pipeline-connector::before {
+  opacity: 0.4;
+}
+
+[data-theme="light"] .pipeline-connector::after {
+  background: var(--theme-signal-500);
+  box-shadow: 0 0 6px var(--theme-signal-500);
+}
+
+[data-theme="light"] .site-nav.scrolled {
+  background: color-mix(in srgb, var(--theme-void-950) 96%, transparent);
+  box-shadow:
+    inset 0 -1px 0 var(--theme-line-strong),
+    0 4px 16px rgba(17, 22, 26, 0.08);
+}

@@ -1,0 +1,264 @@
+---
+import "../styles/site.css";
+import AIModeToggle from "../components/AIModeToggle.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import { navItems } from "../data/site";
+
+interface Props {
+  title: string;
+  description: string;
+  machineContent?: string;
+}
+
+const { title, description, machineContent } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const isActive = (href: string) => {
+  if (href === "/") return currentPath === "/";
+  return currentPath.startsWith(href);
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>
+      (() => {
+        const storedTheme =
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("starlight-theme");
+        const theme =
+          storedTheme ||
+          (window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark");
+        document.documentElement.dataset.theme =
+          theme === "light" ? "light" : "dark";
+
+        const storedAIMode =
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("clackhouse-ai-mode");
+        document.documentElement.dataset.aiMode =
+          storedAIMode === "machine" || storedAIMode === "ai"
+            ? "machine"
+            : "human";
+      })();
+    </script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0b0d10" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content={new URL(Astro.url.pathname, Astro.site).toString()}
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="canonical"
+      href={new URL(Astro.url.pathname, Astro.site).toString()}
+    />
+  </head>
+  <body>
+    <div
+      class="relative min-h-screen overflow-x-hidden bg-void-950 text-fog-100"
+    >
+      <div class="site-grid pointer-events-none fixed inset-0 -z-10"></div>
+
+      <header
+        class="site-nav sticky top-0 z-40 border-b border-line-soft backdrop-blur"
+      >
+        <div
+          class="mx-auto flex w-full max-w-6xl items-center justify-between gap-5 px-6 py-5 lg:px-8"
+        >
+          <a
+            href="/"
+            class="font-mono text-xl font-semibold tracking-tight text-fog-50 lg:text-2xl"
+          >
+            Clack<span class="text-signal-400">House</span>
+          </a>
+
+          <div class="flex items-center gap-5">
+            <nav
+              class="flex items-center gap-6 text-[0.9rem] font-medium text-fog-300"
+            >
+              {
+                navItems.map((item) => (
+                  <a
+                    href={item.href}
+                    class:list={[
+                      "transition hover:text-fog-50",
+                      !item.external && isActive(item.href) && "text-fog-50",
+                    ]}
+                    target={item.external ? "_blank" : undefined}
+                    rel={item.external ? "noreferrer" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                ))
+              }
+            </nav>
+            <a
+              href="https://github.com/ClackHouse"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-2 rounded-full border border-line bg-panel-900/60 px-4 py-1.5 text-xs font-semibold text-fog-200 transition hover:border-line-strong hover:text-fog-50"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                ><path
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+                ></path></svg
+              >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                ></polygon></svg
+              >
+              Star
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <div class="machine-human-content">
+          <slot />
+        </div>
+        {
+          machineContent &&
+            (() => {
+              // Convert markdown links [text](url) to <a> tags
+              const html = machineContent
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(
+                  /\[([^\]]+)\]\(([^)]+)\)/g,
+                  '<a href="$2" class="text-signal-400 underline decoration-signal-400/30 hover:decoration-signal-400">$1</a>',
+                );
+              return (
+                <section class="machine-markdown-view hidden px-6 py-12 lg:px-8 lg:py-16">
+                  <div class="mx-auto max-w-4xl">
+                    <pre
+                      class="machine-pre text-wrap whitespace-pre-wrap font-mono text-sm leading-8 text-fog-100"
+                      set:html={html}
+                    />
+                  </div>
+                </section>
+              );
+            })()
+        }
+      </main>
+
+      <footer class="border-t border-line-soft">
+        <div class="mx-auto max-w-6xl px-6 py-10 lg:px-8">
+          <div class="flex flex-col gap-8 lg:flex-row lg:justify-between">
+            <div class="lg:max-w-xs">
+              <a href="/" class="font-mono text-sm font-semibold text-fog-50"
+                >Clack<span class="text-signal-400">House</span></a
+              >
+              <p class="mt-2 text-sm leading-6 text-fog-300">
+                Local-first typing analytics.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-12 text-sm text-fog-300">
+              <div>
+                <p
+                  class="mb-3 font-mono text-[0.65rem] uppercase tracking-[0.22em] text-fog-400"
+                >
+                  Resources
+                </p>
+                <nav class="flex flex-col gap-2">
+                  <a href="/privacy/" class="transition hover:text-fog-50"
+                    >Privacy</a
+                  >
+                  <a href="/llms.txt" class="transition hover:text-fog-50"
+                    >llms.txt</a
+                  >
+                </nav>
+              </div>
+              <div>
+                <p
+                  class="mb-3 font-mono text-[0.65rem] uppercase tracking-[0.22em] text-fog-400"
+                >
+                  Community
+                </p>
+                <nav class="flex flex-col gap-2">
+                  <a
+                    href="https://github.com/ClackHouse"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="transition hover:text-fog-50">GitHub</a
+                  >
+                </nav>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="mt-8 flex flex-col gap-4 border-t border-line-soft pt-6 text-xs text-fog-400 lg:flex-row lg:items-center lg:justify-between"
+          >
+            <p>&copy; {new Date().getFullYear()} ClackHouse</p>
+            <div class="flex items-center gap-3">
+              <ThemeToggle />
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div class="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 drop-shadow-2xl">
+      <AIModeToggle />
+    </div>
+
+    <script is:inline>
+      /* Scroll-triggered reveal */
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("is-visible");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.12 },
+        );
+        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      } else {
+        document
+          .querySelectorAll(".reveal")
+          .forEach((el) => el.classList.add("is-visible"));
+      }
+
+      /* Nav scroll state */
+      const nav = document.querySelector(".site-nav");
+      if (nav) {
+        const onScroll = () => {
+          nav.classList.toggle("scrolled", window.scrollY > 24);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+      }
+    </script>
+  </body>
+</html>
